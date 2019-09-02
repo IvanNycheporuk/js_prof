@@ -91,8 +91,43 @@ class Zoo {
       others: []
     }
   }
-  addAnimal() {
-    console.log(Object.keys(this.zones));
+
+  addAnimal(obj) {
+    if (Object.keys(this.zones).includes(obj.zone)) {
+      this.zones[obj.zone].push(obj);
+    } else {
+      this.zones.others.push(obj);
+    }
+
+    this.animalCount++;
+  }
+
+  removeAnimal(name) {
+    for (let item in this.zones) {
+      this.zones[item] = this.zones[item].filter( x => x.name !== name);
+    }
+  }
+
+  getAnimal(type, value) {
+    for (let item in this.zones) {        
+        this.zones[item].forEach( x => {
+          if (x[type] === value) {
+            console.log(x);
+          } else {
+            console.log('No such animal, please, try again');
+          }
+        })    
+    }
+  }
+
+  countAnimals() {
+    let animalCount = 0;
+
+    for (let item in this.zones) {
+      animalCount += this.zones[item].length;      
+    }
+
+    console.log(animalCount);
   }
 }
 
@@ -151,8 +186,22 @@ class Reptile extends Animal{
     this.zone = 'reptiles';
   }
 
-  swim() {
+  crawl() {
     console.log(`${this.name} could crawl as it is reptile`);
   }
 }
+
+let wolf = new Mammal('wolf', 'woof', 'carnivore', 20);
+let elephant = new Mammal('elephant', 'viiii', 'herbivore', 20);
+let eagle = new Bird('eagle', 'wffff', 'carnivore', 25);
+let dolphin = new Fish('dolphin', 'khhha', 'carnivore', 15);
+let lizzard = new Reptile('lizzard', 'shhhh', 'carnivore', 5);
+
+let myZoo = new Zoo('myZoo');
+
+myZoo.addAnimal(wolf);
+myZoo.addAnimal(eagle);
+myZoo.addAnimal(elephant);
+myZoo.addAnimal(dolphin);
+myZoo.addAnimal(lizzard);
 
