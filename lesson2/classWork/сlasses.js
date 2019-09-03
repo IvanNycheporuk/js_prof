@@ -45,9 +45,8 @@ class Post {
     this.likes = 0;
 
     this.likePost = this.likePost.bind(this);
-    this.post = document.createElement('div');
 
-    this.render();
+    this.post = document.createElement('div');
   }
 
   render() {
@@ -68,15 +67,12 @@ class Post {
     this.post.querySelector('.post__like').addEventListener('click', this.likePost);
 
     return this.post;
-
-    postsContainer.appendChild(this.post);
   }
 
   likePost() {
     this.likes++;
     this.post.querySelector('.post__like').innerHTML = this.likes;
   }
-
 }
 
 class Advertisment extends Post {
@@ -103,8 +99,7 @@ class Advertisment extends Post {
 
     this.post.querySelector('.post__buy').addEventListener('click', this.buyItem);
 
-    return this.post;
-    postsContainer.appendChild(this.post);    
+    return this.post;  
   }
 
   buyItem() {
@@ -122,5 +117,5 @@ feed.push(post1);
 feed.push(advertisment);
 
 feed.forEach( x => {
-  console.log(x);
+  postsContainer.appendChild(x.render());
 })
