@@ -89,7 +89,26 @@
 
   function Burger( name, ingredients, cookingTime){
     // {...}
+    this.name = name;
+    this.ingredients = ingredients;
+    this.cookingTime = cookingTime;  
   }
+
+  Burger.prototype.showComposition = function(){
+    console.log(this);
+    let {name, ingredients} = this;
+    let compositionLength = ingredients.length;
+    console.log(compositionLength);
+    if( compositionLength !== 0){
+      ingredients.map( function( item ){
+          console.log( 'Состав бургера', name, item );
+      })
+    }
+  }
+
+  let test = new Burger('test', ['bacon', 'cheese', 'tomato'], 20);
+
+  test.showComposition();
 
   function Order(name, condition, value){
     // {...}
