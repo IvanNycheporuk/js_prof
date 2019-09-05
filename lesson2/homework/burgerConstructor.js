@@ -91,14 +91,20 @@
     // {...}
     this.name = name;
     this.ingredients = ingredients;
-    this.cookingTime = cookingTime;  
+    this.cookingTime = cookingTime;
+  }
+
+  Burger.prototype.getBurger = function() {
+    return {
+      name: this.name,
+      ingredients: this.ingredients,
+      cookingTime: this.cookingTime
+    }
   }
 
   Burger.prototype.showComposition = function(){
-    console.log(this);
     let {name, ingredients} = this;
     let compositionLength = ingredients.length;
-    console.log(compositionLength);
     if( compositionLength !== 0){
       ingredients.map( function( item ){
           console.log( 'Состав бургера', name, item );
@@ -106,10 +112,45 @@
     }
   }
 
-  let test = new Burger('test', ['bacon', 'cheese', 'tomato'], 20);
+  let hamburger = new Burger('Hamburger', ['Бекон', 'Сыр Чеддер', 'Помидорка', 'Кунжут'], 20);
+  let cheeseburger = new Burger('Cheeseburger', ['Бекон', 'Сыр Чеддер', 'Помидорка', 'Кунжут', 'Сыр Виолла', 'Сыр Гауда'], 35);
+  let doubleCheesburger = new Burger('DoubleCheesburger', ['Бекон', 'Сыр Чеддер', 'Сыр Чеддер', 'Помидорка', 'Кунжут', 'Сыр Виолла', 'Сыр Гауда', 'Сыр Виолла', 'Сыр Гауда'], 40 );
 
-  test.showComposition();
+  function Order(name, condition, value){   
+    
+    this.condition = condition || '';
+    this.value = value || 'Test value';
+    this.id = new Date().getTime();
+    this.orderNumber = 0;
+    this.orderBurger = name;
+    this.orderException = "";
+    this.orderAvailability;
 
-  function Order(name, condition, value){
-    // {...}
+    this.checkOrder();
   }
+
+  Order.prototype.checkOrder = function(name, condition, value) {
+    menu.forEach( item => {
+      if (item.name === name) {
+        alert('ASDASDASD');
+        return;
+      } 
+
+      if (!condition) {
+        console.log('')
+        return;
+      }
+
+
+
+      
+    })
+  }
+
+  let menu = [hamburger.getBurger(), cheeseburger.getBurger(), doubleCheesburger.getBurger()];
+
+  let order = new Order('Hamburger', '', '');
+
+  console.log(menu);
+
+
