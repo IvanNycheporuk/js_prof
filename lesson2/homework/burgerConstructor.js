@@ -87,6 +87,10 @@
   var OurMenu = [];
   var OurOrders = [];
 
+  let hamburger = new Burger('Hamburger', ['Бекон', 'Сыр Чеддер', 'Помидорка', 'Кунжут'], 20);
+  let cheeseburger = new Burger('Cheeseburger', ['Бекон', 'Сыр Чеддер', 'Помидорка', 'Кунжут', 'Сыр Виолла', 'Сыр Гауда', 'Маслины'], 35);
+  let doubleCheesburger = new Burger('DoubleCheesburger', ['Сыр Чеддер', 'Сыр Чеддер', 'Помидорка', 'Кунжут', 'Сыр Виолла', 'Сыр Гауда', 'Сыр Виолла', 'Сыр Гауда', 'Капуста'], 40 );
+
   function Burger( name, ingredients, cookingTime){
     // {...}
     this.name = name;
@@ -112,45 +116,80 @@
     }
   }
 
-  let hamburger = new Burger('Hamburger', ['Бекон', 'Сыр Чеддер', 'Помидорка', 'Кунжут'], 20);
-  let cheeseburger = new Burger('Cheeseburger', ['Бекон', 'Сыр Чеддер', 'Помидорка', 'Кунжут', 'Сыр Виолла', 'Сыр Гауда'], 35);
-  let doubleCheesburger = new Burger('DoubleCheesburger', ['Бекон', 'Сыр Чеддер', 'Сыр Чеддер', 'Помидорка', 'Кунжут', 'Сыр Виолла', 'Сыр Гауда', 'Сыр Виолла', 'Сыр Гауда'], 40 );
-
-  function Order(name, condition, value){   
-    
+  function Order(name, condition, value){      
     this.condition = condition || '';
-    this.value = value || 'Test value';
+    this.value = value || '';
     this.id = new Date().getTime();
     this.orderNumber = 0;
     this.orderBurger = name;
     this.orderException = "";
     this.orderAvailability;
 
-    this.checkOrder();
+    this.checkOrder(this.orderBurger, this.condition, this.value);
+  }
+
+  Order.prototype.getRandomBurger = function (min, max) {
+    return Math.floor(min + Math.random()*(max + 1 - min))
   }
 
   Order.prototype.checkOrder = function(name, condition, value) {
-    menu.forEach( item => {
-      if (item.name === name) {
-        alert('ASDASDASD');
+    this.orderNumber++;
+
+    for (let i = 0; i < menu.length; i++) {
+      if (menu[i].name === name) {      
+        console.log(`Заказ ${this.orderNumber}: Бургер ${menu[i].name}, будет готов через ${menu[i].cookingTime}`);  
         return;
       } 
 
       if (!condition) {
-        console.log('')
+        let randomBurger = this.getRandomBurger(0, menu.length - 1);
+        console.log(`К сожалению, такого бургера у нас нет, можете попробовать ${menu[randomBurger].name}`);
         return;
       }
-
-
-
       
-    })
+      if (condition === 'has') {
+        if (menu[i].ingredients.includes(value)) {
+          console.log(`Order ${this.orderNumber}. Бургер ${menu[i].name}, с ${value}, будет готов через ${menu[i].cookingTime} минут.`)
+          return; 
+        } 
+      }
+
+      // use some or every + how to create global counter in class
+
+      if (condition === 'except') {
+        for( let j = 0; j < menu[i].ingredients; j++) {
+          if ( menu[i].ingredients[j] === value) {            
+            continue; 
+          } else {
+            console.log(`Order ${this.orderNumber}. Бургер ${menu[i].name}, без ${value}, будет готов через ${menu[i].cookingTime} минут.`);
+            return;
+          }
+        }
+        // menu[i].ingredients.forEach( i => {
+
+        // })
+      }
+    }
+    // menu.forEach( item => {
+
+    // })
   }
 
   let menu = [hamburger.getBurger(), cheeseburger.getBurger(), doubleCheesburger.getBurger()];
 
   let order = new Order('Hamburger', '', '');
 
-  console.log(menu);
+  let order2 = new Order('Hamburger', '', '');
+
+  let order3 = new Order('', '', '');
+
+  let order4 = new Order('', 'has', 'Капуста');
+
+  let order5 = new Order('', 'except', 'Бекон');
+
+  // console.log(menu);
+
+  // console.log(order);
+  // console.log(order2);
 
 
