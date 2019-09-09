@@ -116,11 +116,11 @@
     }
   }
 
+  let orderNumber = 0;
   function Order(name, condition, value){      
     this.condition = condition || '';
     this.value = value || '';
     this.id = new Date().getTime();
-    this.orderNumber = 0;
     this.orderBurger = name;
     this.orderException = "";
     this.orderAvailability;
@@ -133,11 +133,11 @@
   }
 
   Order.prototype.checkOrder = function(name, condition, value) {
-    this.orderNumber++;
+    orderNumber++;
 
     for (let i = 0; i < menu.length; i++) {
       if (menu[i].name === name) {      
-        console.log(`Заказ ${this.orderNumber}: Бургер ${menu[i].name}, будет готов через ${menu[i].cookingTime}`);  
+        console.log(`Заказ ${orderNumber}: Бургер ${menu[i].name}, будет готов через ${menu[i].cookingTime}`);  
         return;
       } 
 
@@ -149,7 +149,7 @@
       
       if (condition === 'has') {
         if (menu[i].ingredients.includes(value)) {
-          console.log(`Order ${this.orderNumber}. Бургер ${menu[i].name}, с ${value}, будет готов через ${menu[i].cookingTime} минут.`)
+          console.log(`Order ${orderNumber}. Бургер ${menu[i].name}, с ${value}, будет готов через ${menu[i].cookingTime} минут.`)
           return; 
         } 
       }
@@ -161,7 +161,7 @@
           if ( menu[i].ingredients[j] === value) {            
             continue; 
           } else {
-            console.log(`Order ${this.orderNumber}. Бургер ${menu[i].name}, без ${value}, будет готов через ${menu[i].cookingTime} минут.`);
+            console.log(`Order ${orderNumber}. Бургер ${menu[i].name}, без ${value}, будет готов через ${menu[i].cookingTime} минут.`);
             return;
           }
         }
