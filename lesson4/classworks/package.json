@@ -1,0 +1,16 @@
+{
+  "name": "hw4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "task1.js",
+  "scripts": {
+    "start": "webpack --watch",
+    "webpack": "webpack ./application/index.js --output-path ./public/js --output-filename bundle.js  --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
+  }
+}
