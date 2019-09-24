@@ -34,9 +34,11 @@ export default class App{
             data.forEach( item => {
                 let card = document.createElement('div');
 
+                console.log(item);
+
 
                 card.innerHTML = `
-                    <div class="card m-1" style="width: 18rem;">                        
+                    <div class="card m-1" style="width: 18rem;" data-id=${item._id}>                        
                         <div class="card-body">
                             <h5 class="card-title">Name: ${item.name}</h5>
                             <p class="card-text">Gender: ${item.gender}</p>
