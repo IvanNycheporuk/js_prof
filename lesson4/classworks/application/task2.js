@@ -20,3 +20,73 @@
         Двойной, тройной и более клики на кнопку не должны вызывать повторную
         инициализацию инвервала.
 */
+
+document.addEventListener('DOMContentLoaded', () => {
+    var nightBtn = document.getElementById('Do');
+
+    let startEvent = new CustomEvent('start');
+    let stopEvent = new CustomEvent('stop');
+    let nightEven = new CustomEvent('night');
+    
+    var allLights = document.querySelectorAll('.trafficLight');
+
+    nightBtn.addEventListener('click', () => {
+        allLights.forEach(light => light.dispatchEvent(new CustomEvent('night', {
+            detail: {runningFromBtn: true}
+        })));
+    });
+    
+    allLights.forEach(light => {
+        light.counter = 1;
+        var nightInterval = null;
+        var nightMode = false;
+    
+        light.addEventListener('click', () => {
+            console.log(`${light.dataset.traficid} was clicked!`);
+            if (light.counter % 2 != 0) {
+                light.dispatchEvent(startEvent);
+            }
+
+            if (light.counter % 2 == 0) {
+                light.dispatchEvent(stopEvent);
+            }
+            
+            light.counter ++;
+
+            console.log(light.counter);        
+        });
+    
+        light.addEventListener('start', () => {
+            //debugger;
+            if (nightInterval) {
+                clearInterval(nightInterval);
+            }
+            console.log(`${light.dataset.traficid} green light!`);
+            light.className = 'trafficLight green';            
+        });
+
+        light.addEventListener('stop', () => {
+            console.log(`${light.dataset.traficid} red light!`);
+            light.className = 'trafficLight red'
+        });
+
+        light.addEventListener('night', (event) => {
+            if(nightMode) {
+                return;
+            }
+
+            console.log(`${light.dataset.traficid} yellow light!`);
+            light.classList.remove('green', 'red');
+    
+            nightInterval = setInterval(() => {
+                light.classList.toggle('yellow');
+            }, 1000);
+
+            if (event.detail?.runningFromBtn) {
+                nightMode = true;
+            }
+        });
+
+        light.dispatchEvent(nightEven);
+    });
+});

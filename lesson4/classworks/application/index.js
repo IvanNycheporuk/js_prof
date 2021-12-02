@@ -1,7 +1,11 @@
-import App from './task1';
+// import App from './task1';
 
-let app = document.getElementById('App');
+// let app = document.getElementById('App');
 
-new App(app);
+// new App(app);
 
 //console.log(app);
+
+import Demo1 from './observers/demo_obs';
+
+Demo1();
