@@ -40,8 +40,17 @@ class NewHuman extends Human {
             console.log(`Temperature is: ${this.currentTemperature}. ${this.name} was freshed with ${cooler.name}`);
             return;
         }
-        
+
         console.log(`temp was changed on ${changeValue}, but ${this.name} is ok :)`);        
+    }
+
+    addCooler(cooler) {
+        if (!cooler.name && !cooler.temperatureCoolRate) {
+            console.warn('sorry you need to sprecify name and temperatureCoolRate');
+            return;
+        }
+
+        this.coolers.push(cooler);
     }
 }
 
